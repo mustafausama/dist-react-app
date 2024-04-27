@@ -25,7 +25,7 @@ function App() {
     fetch('http://18.221.42.105/api/v1/image_processing', {
       method: 'POST',
       body: formData,
-      mode: 'no-cors'
+      mode:'cors'
     })
     .then(response => {
       if (response.ok) {
