@@ -22,10 +22,10 @@ function App() {
     formData.append('image', images[0]);
     formData.append('operation', operation);
 
-    fetch('http://18.221.42.105/api/v1/image_processing', {
+    fetch('http://dist-proj-api.mu-stafa.com/api/v1/image_processing', {
       method: 'POST',
       body: formData,
-      mode:'cors'
+      mode: 'no-cors'
     })
     .then(response => {
       if (response.ok) {
