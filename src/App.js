@@ -12,8 +12,12 @@ function App() {
   const [operation, setOperation] = useState("BLUR");
   const [processedImageUrl, setProcessedImageUrl] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState(null);
 
   const handleImageUpload = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setImage(URL.createObjectURL(event.target.files[0]));
+    }
     const selectedImages = Array.from(event.target.files);
     setImages(selectedImages);
   };
@@ -37,12 +41,7 @@ function App() {
       .then((data) => {
         const url = data.url;
         setProcessedImageUrl(url);
-        // This is an s3 URL, so we need to download the image to display it
       })
-      // .then((blob) => {
-      //   const imageUrl = URL.createObjectURL(blob); // Create object URL for the Blob
-      //   setProcessedImageUrl(imageUrl); // Set processed image URL
-      // })
       .catch((error) => {
         console.error("Error processing images:", error);
       })
@@ -81,6 +80,18 @@ function App() {
       {loading && (
         <div className="loading processed-image-container">
           <img src={spinner} alt="Loading..." className="processed-image" />
+        </div>
+      )}
+      {image && (
+        <div className="processed-image-container">
+          <h2
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Selected Image
+          </h2>
+          <img src={image} alt="Processed" className="processed-image" />
         </div>
       )}
       {!loading && processedImageUrl && (
