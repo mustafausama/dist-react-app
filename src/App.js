@@ -51,7 +51,7 @@ function App() {
   };
 
   return (
-    <div>
+    <>
       <div className="container">
         <h1>Image Processing App</h1>
         <input
@@ -79,40 +79,61 @@ function App() {
           Process Images
         </button>
       </div>
-      {loading && (
-        <div className="loading processed-image-container">
-          <img src={spinner} alt="Loading..." className="processed-image" />
+      <div>
+        {loading && (
+          <div className="loading processed-image-container">
+            <img
+              src={spinner}
+              alt="Loading..."
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+          </div>
+        )}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "20px",
+            gap: "20px",
+          }}
+        >
+          {image && (
+            <div className="processed-image-container">
+              <h2
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                Selected Image
+              </h2>
+              <img src={image} alt="Processed" className="processed-image" />
+            </div>
+          )}
+          {!loading && processedImageUrl && (
+            <div className="processed-image-container">
+              <h2
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                Processed Image
+              </h2>
+              <img
+                src={processedImageUrl}
+                alt="Processed"
+                className="processed-image"
+              />
+            </div>
+          )}
         </div>
-      )}
-      {image && (
-        <div className="processed-image-container">
-          <h2
-            style={{
-              textAlign: "center",
-            }}
-          >
-            Selected Image
-          </h2>
-          <img src={image} alt="Processed" className="processed-image" />
-        </div>
-      )}
-      {!loading && processedImageUrl && (
-        <div className="processed-image-container">
-          <h2
-            style={{
-              textAlign: "center",
-            }}
-          >
-            Processed Image
-          </h2>
-          <img
-            src={processedImageUrl}
-            alt="Processed"
-            className="processed-image"
-          />
-        </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 }
 

@@ -1,73 +1,78 @@
-
-
 body {
   margin: 0;
   padding: 0;
-  background-color: #ffcccc; 
+  background-color: #ffcccc;
   display: flex;
-  justify-content: center; 
-  align-items: center; 
-  font-family: Arial, sans-serif; 
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
 }
 
 .container {
   width: 900px;
   padding: 20px;
-  text-align: center; 
-  background-color: #fff; 
-  border-radius: 10px; 
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  text-align: center;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: auto;
 }
 
 h1 {
-  margin-bottom: 20px; 
-  color: #333; 
+  margin-bottom: 20px;
+  color: #333;
 }
 
 .input-section {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .file-input {
-  margin-right: 10px; 
-  padding: 10px; 
-  border: 2px solid #ffb300; 
-  border-radius: 5px; 
-  background-color: #fff; 
-  color: #333; 
-  font-size: 16px; 
+  margin-right: 10px;
+  padding: 10px;
+  border: 2px solid #ffb300;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  font-size: 16px;
 }
 
 .select-operation {
-  margin-left: 10px; 
-  padding: 10px; 
-  border: 2px solid #ffb300; 
-  border-radius: 5px; 
-  background-color: #fff; 
-  color: #333; 
-  font-size: 16px; 
+  margin-left: 10px;
+  padding: 10px;
+  border: 2px solid #ffb300;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  font-size: 16px;
 }
 
 .button {
   padding: 10px 20px;
-  background-color: #ffb300; 
+  background-color: #ffb300;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease; 
-  font-size: 16px; 
-  margin-left:50px;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+  margin-left: 50px;
 }
 
 .button:hover {
-  background-color: #ffa000; 
+  background-color: #ffa000;
+}
+
+.processed-image-container {
+  width: 50%;
+  margin: 0 auto;
 }
 
 .processed-image {
+  width: 100%;
   display: block;
   margin: 0 auto;
 }
