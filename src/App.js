@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import "./App.css";
+import spinner from "./spinner.gif";
 
 const BASE_URL =
   process.env.REACT_APP_BACKEND_BASE_URL || "http://dist-proj-api.mu-stafa.com";
@@ -10,6 +11,7 @@ function App() {
   const [images, setImages] = useState([]);
   const [operation, setOperation] = useState("BLUR");
   const [processedImageUrl, setProcessedImageUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleImageUpload = (event) => {
     const selectedImages = Array.from(event.target.files);
@@ -25,24 +27,27 @@ function App() {
     formData.append("image", images[0]);
     formData.append("operation", operation);
 
+    setLoading(true);
     fetch(`${BASE_URL}/api/v1/image_processing`, {
       method: "POST",
       body: formData,
       mode: "cors",
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.blob(); // Convert response to Blob object
-        } else {
-          throw new Error("Error processing images");
-        }
+      .then((response) => response.json())
+      .then((data) => {
+        const url = data.url;
+        setProcessedImageUrl(url);
+        // This is an s3 URL, so we need to download the image to display it
       })
-      .then((blob) => {
-        const imageUrl = URL.createObjectURL(blob); // Create object URL for the Blob
-        setProcessedImageUrl(imageUrl); // Set processed image URL
-      })
+      // .then((blob) => {
+      //   const imageUrl = URL.createObjectURL(blob); // Create object URL for the Blob
+      //   setProcessedImageUrl(imageUrl); // Set processed image URL
+      // })
       .catch((error) => {
         console.error("Error processing images:", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -73,7 +78,12 @@ function App() {
           Process Images
         </button>
       </div>
-      {processedImageUrl && (
+      {loading && (
+        <div className="loading processed-image-container">
+          <img src={spinner} alt="Loading..." className="processed-image" />
+        </div>
+      )}
+      {!loading && processedImageUrl && (
         <div className="processed-image-container">
           <h2
             style={{
