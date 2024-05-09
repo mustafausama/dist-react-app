@@ -72,6 +72,8 @@ function App() {
           <option value="BLUR">BLUR</option>
           <option value="EMBOSS">EMBOSS</option>
           <option value="SHARPEN">SHARPEN</option>
+          <option value="EDGE_DETECTION">EDGE DETECTION</option>
+          <option value="MEDIAN">Median Filter</option>
         </select>
         <button onClick={processImages} className="button">
           Process Images
