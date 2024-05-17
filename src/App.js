@@ -31,7 +31,9 @@ function App() {
 
   const processImages = async () => {
     const formData = new FormData();
-    formData.append("image", images[0]);
+    for (let i = 0; i < images.length; i++) {
+      formData.append("images", images[i]);
+    }
     formData.append("operation", operation);
 
     setLoading(true);
@@ -41,7 +43,6 @@ function App() {
       autoClose: false,
       progress: 0,
     });
-
     axios({
       url: `${BASE_URL}/api/v1/image_processing`,
       data: formData,
@@ -79,22 +80,6 @@ function App() {
     }).finally(() => {
       setLoading(false);
     });
-    // fetch(`${BASE_URL}/api/v1/image_processing`, {
-    //   method: "POST",
-    //   body: formData,
-    //   mode: "cors",
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     const url = data.url;
-    //     setProcessedImageUrl(url);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error processing images:", error);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
   };
 
   return (
@@ -106,6 +91,7 @@ function App() {
           accept="image/*"
           onChange={handleImageUpload}
           className="file-input"
+          multiple
         />
         <label htmlFor="operation-select" className="select-label">
           Choose Operation:
