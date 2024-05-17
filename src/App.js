@@ -136,7 +136,7 @@ function App() {
   return (
     <>
       <Container>
-        <h1>Image Processing App</h1>
+        <h1 className="text-center">Distributed Image Processing App</h1>
         {/* Create a pretty design header having a form with the file and operration inputs using react-bootstrap */}
         <>
           <Form.Group controlId="formFileMultiple" className="mb-3">
@@ -200,93 +200,23 @@ function App() {
               ) : null}
             </Col>
             <Col xs={"12"} className="mb-4 mt-4">
-              <ProgressBar now={imagesProgress[index]} />
+              <ProgressBar
+                animated
+                now={imagesProgress[index]}
+                variant={imagesProgress[index] >= 90 ? "success" : "primary"}
+              />
             </Col>
+            {processedImages[index] ? (
+              // Align the button to the right
+              <Col className="d-flex justify-content-end">
+                <Button variant="success" href={processedImages[index]}>
+                  Download Processed Image
+                </Button>
+              </Col>
+            ) : null}
           </Row>
         ))}
       </Container>
-      {/* <div className="container">
-        <h1>Image Processing App</h1>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          className="file-input"
-          multiple
-        />
-        <label htmlFor="operation-select" className="select-label">
-          Choose Operation:
-        </label>
-        <select
-          id="operation-select"
-          value={operation}
-          onChange={handleOperationChange}
-          className="select-operation"
-        >
-          <option value="BLUR">BLUR</option>
-          <option value="EMBOSS">EMBOSS</option>
-          <option value="SHARPEN">SHARPEN</option>
-          <option value="EDGE_DETECTION">EDGE DETECTION</option>
-          <option value="MEDIAN">Median Filter</option>
-        </select>
-        <button onClick={processImages} className="button">
-          Process Images
-        </button>
-      </div>
-      <div>
-        {loading && (
-          <div className="loading processed-image-container">
-            <img
-              src={spinner}
-              alt="Loading..."
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-              }}
-            />
-          </div>
-        )}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "20px",
-            gap: "20px",
-          }}
-        >
-          {image && (
-            <div className="processed-image-container">
-              <h2
-                style={{
-                  textAlign: "center",
-                }}
-              >
-                Selected Image
-              </h2>
-              <img src={image} alt="Processed" className="processed-image" />
-            </div>
-          )}
-          {!loading && processedImageUrl && (
-            <div className="processed-image-container">
-              <h2
-                style={{
-                  textAlign: "center",
-                }}
-              >
-                Processed Image
-              </h2>
-              <img
-                src={processedImageUrl}
-                alt="Processed"
-                className="processed-image"
-              />
-            </div>
-          )}
-        </div>
-      </div> */}
       <ToastContainer />
     </>
   );
