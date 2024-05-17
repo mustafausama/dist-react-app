@@ -3,6 +3,9 @@
 import React, { useState } from "react";
 import "./App.css";
 import spinner from "./spinner.gif";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const BASE_URL =
   process.env.REACT_APP_BACKEND_BASE_URL || "http://dist-proj-api.mu-stafa.com";
@@ -26,28 +29,72 @@ function App() {
     setOperation(event.target.value);
   };
 
-  const processImages = () => {
+  const processImages = async () => {
     const formData = new FormData();
     formData.append("image", images[0]);
     formData.append("operation", operation);
 
     setLoading(true);
-    fetch(`${BASE_URL}/api/v1/image_processing`, {
+    // Create a toast and update it with the event message
+    const toastId = toast.loading("Processing Image...", {
+      type: "",
+      autoClose: false,
+      progress: 0,
+    });
+
+    axios({
+      url: `${BASE_URL}/api/v1/image_processing`,
+      data: formData,
       method: "POST",
-      body: formData,
-      mode: "cors",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const url = data.url;
-        setProcessedImageUrl(url);
-      })
-      .catch((error) => {
-        console.error("Error processing images:", error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      onDownloadProgress: (progressEvent) => {
+        console.log(progressEvent.loaded);
+        const xhr = progressEvent.event.target;
+        const { responseText } = xhr;
+        console.log(responseText);
+        const messages = responseText.split("\n");
+        const newMessage =
+          messages[messages.length - 2] ||
+          messages[messages.length - 1] ||
+          "{}";
+        const response = JSON.parse(newMessage);
+        if (response.event)
+          toast.update(toastId, {
+            render: response.event,
+            type: "info",
+            autoClose: false,
+            progress: parseInt(response.progress) / 100,
+          });
+        else if (response.url) {
+          setProcessedImageUrl(response.url);
+          toast.update(toastId, {
+            render: "Image Processed",
+            type: "success",
+            autoClose: 3000,
+            progress: parseInt(response.progress) / 100,
+            closeOnClick: true,
+          });
+          setLoading(false);
+        }
+      },
+    }).finally(() => {
+      setLoading(false);
+    });
+    // fetch(`${BASE_URL}/api/v1/image_processing`, {
+    //   method: "POST",
+    //   body: formData,
+    //   mode: "cors",
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     const url = data.url;
+    //     setProcessedImageUrl(url);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error processing images:", error);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   };
 
   return (
@@ -133,6 +180,7 @@ function App() {
           )}
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }
