@@ -203,7 +203,7 @@ function App() {
               <ProgressBar
                 animated
                 now={imagesProgress[index]}
-                variant={imagesProgress[index] >= 90 ? "success" : "primary"}
+                variant="success"
               />
             </Col>
             {processedImages[index] ? (
