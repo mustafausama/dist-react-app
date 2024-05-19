@@ -1,3 +1,7 @@
+# Video Link
+
+[Distributed Image Processing Demo and Discussion](https://drive.google.com/drive/folders/1Kj2XA7Wpx6NQtDzAKcZvVZs1ZcImYNMP?usp=drive_link)
+
 # Deployment and running
 
 Simply create an S3 bucket with all public access enabled. In the properties, mark it a static web hosting.
