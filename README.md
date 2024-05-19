@@ -1,4 +1,17 @@
-# Getting Started with Create React App
+# Deployment and running
+
+Simply create an S3 bucket with all public access enabled. In the properties, mark it a static web hosting.
+
+In github secretst, add the following secrets corresponding to your secret data:
+
+- **AWS_ACCESS_KEY_ID**
+- **AWS_S3_BUCKET**
+- **AWS_SECRET_ACCESS_KEY**
+- **BACKEND_BASE_URL**
+
+Make any push to the main branch, and the app should be deployed.
+
+# Getting Started with the React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
